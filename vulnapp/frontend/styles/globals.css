@@ -1,0 +1,35 @@
+body {
+  font-family: system-ui, sans-serif;
+  max-width: 720px;
+  margin: 40px auto;
+  padding: 0 16px;
+  color: #1a1a1a;
+}
+
+input, textarea {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  margin: 6px 0 14px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.note-card {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.error {
+  color: #b00020;
+}
+
+nav a {
+  margin-right: 16px;
+}

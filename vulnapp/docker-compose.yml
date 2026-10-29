@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: vulnapp-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: vulnapp
+      POSTGRES_PASSWORD: vulnapp_pw
+      POSTGRES_DB: vulnapp
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - vulnapp-net
+
+  backend:
+    build: ./backend
+    container_name: vulnapp-backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://vulnapp:vulnapp_pw@db:5432/vulnapp
+      JWT_SECRET: super-insecure-dev-secret
+      PORT: 4000
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+    networks:
+      - vulnapp-net
+
+  frontend:
+    build: ./frontend
+    container_name: vulnapp-frontend
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:4000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - vulnapp-net
+
+networks:
+  vulnapp-net:
+    driver: bridge
+
+volumes:
+  db_data:
