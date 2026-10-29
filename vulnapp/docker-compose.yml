@@ -37,7 +37,9 @@ services:
     container_name: vulnapp-frontend
     restart: unless-stopped
     environment:
-      NEXT_PUBLIC_API_URL: http://localhost:4000
+      # Server-side only; the Next.js server (not the browser) uses this to
+      # reach the backend container over the internal Docker network.
+      BACKEND_INTERNAL_URL: http://backend:4000
     ports:
       - "3000:3000"
     depends_on:

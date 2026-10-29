@@ -1,4 +1,7 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+// Relative path - goes through the Next.js rewrite proxy defined in
+// next.config.js, so the browser always calls its own origin regardless
+// of what host/IP it's viewing the app from.
+const API_URL = "";
 
 function getToken() {
   if (typeof window === "undefined") return null;
